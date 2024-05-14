@@ -16,7 +16,7 @@ This Discord bot takes your current game from Discord and sets Twitch category a
    
 ### Discord Configuration
 
-1. Create an application on Discord from Discord Developer Portal.
+1. Create an application on Discord from [Discord Developer Portal](https://discord.com/developers/applications)
 2. Go to the Bot section and enable all Privileged Gateway Intents. Reset the Token and copy it; this will be your DISCORD_BOT_TOKEN.
 3. Go to the OAuth2 section, select Bot, and choose the necessary permissions.
 4. Copy the generated URL and open it in your browser to authorize the bot to join your Discord channel.
@@ -26,7 +26,7 @@ This Discord bot takes your current game from Discord and sets Twitch category a
 
 ### Twitch Configuration
 
-1. Go to Twitch Developer Console and create an application. Copy the Client ID; this will be your TWITCH_CLIENT_ID.
+1. Go to [Twitch Developer Console](https://dev.twitch.tv/console/apps/) and create an application. Copy the Client ID; this will be your TWITCH_CLIENT_ID.
 2. Open this link in your browser https://id.twitch.tv/oauth2/authorize?client_id={{TWITCH_CLIENT_ID}}&redirect_uri=http://localhost&response_type=token&scope=channel_editor
 3. After authorizing, copy the access_token from the redirected URL; this will be your TWITCH_TOKEN.
 4. Visit [Streamweasels](https://www.streamweasels.com/tools/convert-twitch-username-to-user-id/) to get your user ID from your Twitch username; this will be your TWITCH_USER_ID.
