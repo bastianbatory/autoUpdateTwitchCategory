@@ -123,7 +123,7 @@ async def check_presence():
             if new_game != current_game:
                 current_game = new_game
                 # If the game is not None (i.e., if a game is being played), search for the game ID on Twitch
-                if new_game and new_game != "Spotify" and new_game != "Twitch":
+                if new_game and new_game != "Spotify" and new_game != "Twitch" and new_game != "Hang Status":
                     game_id_twitch = search_twitch_game_id(new_game)
                     # If the game ID is found on Twitch, change the stream category
                     if game_id_twitch:
