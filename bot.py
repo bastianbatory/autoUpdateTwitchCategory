@@ -8,6 +8,13 @@ import json
 with open('config.json') as f:
     config = json.load(f)
 
+# Load manual categories from manual-cat.json file
+with open('cat-contains.json') as f:
+    cat_contains = json.load(f)
+
+with open('cat-exact.json') as f:
+    cat_exact = json.load(f)
+
 # Bot intents
 intents = discord.Intents.default()
 intents.presences = True
@@ -79,14 +86,14 @@ def search_twitch_game_id(game):
     url = f'{BASE_TWITCH_API_URL}/search/categories'
     # Request parameters
     params = {
-        'query': game
+        'query': game,
+        'first': '1'
     }
     # Request headers with the access token
     headers = {
         'Authorization': f'Bearer {TWITCH_TOKEN}',
         'Client-Id': TWITCH_CLIENT_ID,
-        'Content-Type': 'application/json',
-        'first': '2'
+        'Content-Type': 'application/json'
     }
     # Print the complete request before sending it
     print('Request to the server:')
@@ -123,11 +130,21 @@ async def check_presence():
             if new_game != current_game:
                 current_game = new_game
                 # If the game is not None (i.e., if a game is being played), search for the game ID on Twitch
-                if new_game and new_game != "Spotify" and new_game != "Twitch" and new_game != "Hang Status":
+                if new_game:
+                    for category, programArray in cat_exact.items():
+                        if new_game in programArray:
+                            game_id_twitch = search_twitch_game_id(category)
+                            change_twitch_category(game_id_twitch)
+                            return
+                    for category, programArray in cat_contains.items():
+                        for programa in programArray:
+                            if programa in new_game:
+                                game_id_twitch = search_twitch_game_id(category)
+                                change_twitch_category(game_id_twitch)       
+                                return     
                     game_id_twitch = search_twitch_game_id(new_game)
-                    # If the game ID is found on Twitch, change the stream category
-                    if game_id_twitch:
-                        change_twitch_category(game_id_twitch)
+                    change_twitch_category(game_id_twitch)
+                    return 
                 else:
                     # If no game is being played, set "Just Chatting" as the current game
                     game_id_twitch = search_twitch_game_id("Just Chatting")
